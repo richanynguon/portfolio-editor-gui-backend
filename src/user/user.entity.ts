@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { Project } from 'src/project/project.entity';
 
 @Entity('users')
 export class User {
@@ -14,10 +15,31 @@ export class User {
 
   @Column()
   password: string;
-  // todo Make false for production
-  @Column({ default: true})
-  confirmed: boolean;
 
-  // @OneToMany(() => Project, project => project.user)
-  // project: Promise<Project[]>
+  @Column()
+  user_location: string;
+
+  @Column()
+  user_github: string;
+
+  @Column()
+  user_twitter: string;
+
+  @Column()
+  user_linkedin: string;
+
+  @Column()
+  user_stack: string;
+
+  @Column()
+  user_learning: string;
+
+  @Column()
+  user_interested: string;
+
+  @Column()
+  user_involved: string;
+
+  @OneToMany(() => Project, project => project.user)
+  project: Promise<Project[]>
 }
