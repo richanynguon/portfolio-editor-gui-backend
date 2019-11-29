@@ -9,4 +9,7 @@ export class ContactInput implements Partial<User>{
 
   @Field()
   message: string;
+
+  @Field()
+  name: string;
 }

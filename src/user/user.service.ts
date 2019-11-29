@@ -47,7 +47,7 @@ export class UserService {
     if (!checkedPassword) {
       return errorMessage("login", "You have submitted an invalid email or password");
     }
-    if(user.user_name !== 'creator'){
+    if (user.user_name !== 'creator') {
       return errorMessage("login", "Your account is not allowed to have access");
     }
     req.session.userId = user.id;
@@ -66,16 +66,17 @@ export class UserService {
 
   async sendBalooEmail(
     email: string,
-    message: string
+    message: string,
+    name: string,
   ): Promise<ErrorResponse[] | [SuccessResponse]> {
     const emailList = `${email}, alina.nguon@gmail.com`
-    if(!email){
+    if (!email) {
       return errorMessage("contact", "Unable to send your email");
     }
-    await sendEmail(emailList, message)
+    await sendEmail(emailList, message, name)
     return successMessage('contact', `Please check your inbox`);
 
-    
+
   }
 
 

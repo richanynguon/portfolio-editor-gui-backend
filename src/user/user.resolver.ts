@@ -3,6 +3,7 @@ import {
   Mutation,
   Context,
   Args,
+  Query
 } from '@nestjs/graphql';
 import { SignUpInput } from './inputs/signupInput';
 import { UserService } from './user.service';
@@ -17,6 +18,11 @@ export class UserResolver {
   constructor(
     private readonly userService: UserService
   ) { }
+
+  @Query(() => String)
+  async hello() {
+    return 'Welp hey';
+  }
 
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async signup(
@@ -34,7 +40,7 @@ export class UserResolver {
   }
 
 
-  @Mutation(() => Boolean)
+  @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async logout(
     @Context() ctx: MyContext,
   ) {
@@ -43,9 +49,9 @@ export class UserResolver {
 
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async sendBalooEmail(
-    @Args('contactIput') {email, message}: ContactInput
+    @Args('contactIput') {email, message, name}: ContactInput
   ): Promise<ErrorResponse[] | [SuccessResponse]> {
-    return this.userService.sendBalooEmail(email, message);
+    return this.userService.sendBalooEmail(email, message, name);
   }
 
 }
