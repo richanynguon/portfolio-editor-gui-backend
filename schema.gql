@@ -24,6 +24,19 @@ type Mutation {
   login(loginInput: LoginInput!): [ErrorResponse!]!
   logout: [ErrorResponse!]!
   sendBalooEmail(contactIput: ContactInput!): [ErrorResponse!]!
+  editProfile(profileArgs: ProfileInput!): [ErrorResponse!]!
+}
+
+input ProfileInput {
+  user_name: String!
+  user_location: String!
+  user_github: String!
+  user_twitter: String!
+  user_linkedin: String!
+  user_stack: String!
+  user_learning: String!
+  user_interested: String!
+  user_involved: String!
 }
 
 type Project {
@@ -45,7 +58,7 @@ type ProjectVote {
 }
 
 type Query {
-  hello: String!
+  getUser(user_name: String!): User!
 }
 
 input SignUpInput {
@@ -57,4 +70,19 @@ input SignUpInput {
 type SuccessResponse {
   path: String!
   message: String!
+}
+
+type User {
+  id: String!
+  user_name: String!
+  email: String!
+  password: String!
+  user_location: String!
+  user_github: String!
+  user_twitter: String!
+  user_linkedin: String!
+  user_stack: String!
+  user_learning: String!
+  user_interested: String!
+  user_involved: String!
 }

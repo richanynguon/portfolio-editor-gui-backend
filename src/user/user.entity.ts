@@ -1,42 +1,57 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
-import { Project } from 'src/project/project.entity';
+import { Project } from '../project/project.entity';
+import { ObjectType, Field } from 'type-graphql';
+
 
 @Entity('users')
+@ObjectType()
 export class User {
-
+ 
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
+  
+  @Field()
   @Column('text')
   user_name: string;
-
+  
+  @Field()
   @Column('text')
   email: string;
-
+  
+  @Field()
   @Column()
   password: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_location: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_github: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_twitter: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_linkedin: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_stack: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_learning: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_interested: string;
-
+  
+  @Field()
   @Column({ nullable: true })
   user_involved: string;
 

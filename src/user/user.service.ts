@@ -21,9 +21,9 @@ export class UserService {
     private readonly userRepo: UserRepository
   ) { }
 
-  async getUser(user_name: string): Promise<ErrorResponse[] | User> {
+  async getUser(user_name: string): Promise<User | ErrorResponse[]> {
     const user = await this.userRepo.findOne({ where: { user_name } });
-    if (!user) {
+    if(!user){
       return errorMessage('user', 'Unable to find the user you are looking for')
     }
     return user;

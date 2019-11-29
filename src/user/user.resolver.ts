@@ -21,8 +21,12 @@ export class UserResolver {
     private readonly userService: UserService
   ) { }
 
-  @Query(() =>[ErrorResponse] || User)
-  async getUser(user_name: string) {
+
+
+  @Query(() => User || [ErrorResponse] )
+  async getUser(
+    @Args('user_name') user_name: string
+    ): Promise<User | ErrorResponse[]> {
     return this.userService.getUser(user_name);
   }
 
@@ -51,7 +55,7 @@ export class UserResolver {
 
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async sendBalooEmail(
-    @Args('contactIput') {email, message, name}: ContactInput
+    @Args('contactIput') { email, message, name }: ContactInput
   ): Promise<ErrorResponse[] | [SuccessResponse]> {
     return this.userService.sendBalooEmail(email, message, name);
   }
