@@ -7,7 +7,9 @@ import { UserService } from './user.service';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(private readonly userService: UserService)
+  constructor(
+    private readonly userService: UserService
+  ) { }
 
   @Mutation()
   async signup(@Arg('signupInput') signupInput: SignUpInput) {
