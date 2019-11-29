@@ -9,6 +9,7 @@ import { SuccessResponse } from './shared/successResponse';
 import * as bcrypt from 'bcryptjs';
 import { Request } from 'express';
 import { LoginInput } from './inputs/loginInput';
+import { MyContext } from 'src/types/myContext';
 
 @Injectable()
 export class UserService {
@@ -51,5 +52,14 @@ export class UserService {
     req.session.userId = user.id;
 
     return successMessage('login', `Welcome ${user.user_name}`);
+  }
+
+  async logout(cxt: MyContext) {
+    await cxt.req.session.destroy(err => {
+      console.log(err)
+      return false;
+    })
+    await cxt.res.clearCookie("votingapp");
+    return true;
   }
 }

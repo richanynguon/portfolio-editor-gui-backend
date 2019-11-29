@@ -32,4 +32,12 @@ export class UserResolver {
     return this.userService.login(loginInput, ctx.req)
   }
 
+
+  @Mutation(() => Boolean)
+  async logout(
+    @Context() ctx: MyContext,
+  ) { 
+    return this.userService.logout(ctx)
+  }
+
 }
