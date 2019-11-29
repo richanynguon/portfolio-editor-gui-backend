@@ -10,6 +10,10 @@ import { typeOrmConfig } from './config/typeOrmConfig';
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
+      context: ({ req, res }) => ({
+        req,
+        res
+      }),
     }),
     UserModule,
     TypeOrmModule.forRoot(typeOrmConfig)

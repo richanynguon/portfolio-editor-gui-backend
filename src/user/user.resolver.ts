@@ -9,6 +9,7 @@ import { UserService } from './user.service';
 import { ErrorResponse } from './shared/errorResponse';
 import { SuccessResponse } from './shared/successResponse';
 import { LoginInput } from './inputs/loginInput';
+import { MyContext } from 'src/types/myContext';
 
 @Resolver('User')
 export class UserResolver {
@@ -27,7 +28,7 @@ export class UserResolver {
   async login(
     @Args('loginInput') loginInput: LoginInput,
     @Context() ctx: MyContext
-  ): Promise<ErrorResponse[] | null> {
+  ): Promise<ErrorResponse[] | [SuccessResponse]> {
     return this.userService.login(loginInput, ctx.req)
   }
 
