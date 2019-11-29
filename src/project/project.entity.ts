@@ -11,13 +11,12 @@ export class Project {
   @PrimaryGeneratedColumn()
   id: number;
 
-
   @Field()
   @Column('text')
   title: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   project_focus: string;
 
   @Field()
@@ -29,8 +28,9 @@ export class Project {
   project_stack: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   project_photo: string;
+  
 
   @Field()
   @Column()
