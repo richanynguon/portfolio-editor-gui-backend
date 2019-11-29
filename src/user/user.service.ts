@@ -10,6 +10,7 @@ import * as bcrypt from 'bcryptjs';
 import { Request } from 'express';
 import { LoginInput } from './inputs/loginInput';
 import { MyContext } from 'src/types/myContext';
+import { sendEmail } from 'src/utils/sendEmail';
 
 @Injectable()
 export class UserService {
@@ -54,12 +55,28 @@ export class UserService {
     return successMessage('login', `Welcome ${user.user_name}`);
   }
 
-  async logout(cxt: MyContext) {
+  async logout(cxt: MyContext): Promise<ErrorResponse[] | SuccessResponse[]> {
     await cxt.req.session.destroy(err => {
       console.log(err)
-      return false;
+      return errorMessage("logout", "Sorry unable to logout");
     })
     await cxt.res.clearCookie("votingapp");
-    return true;
+    return successMessage('logout', `Succesfully able to logout`);
   }
+
+  async sendBalooEmail(
+    email: string,
+    message: string
+  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+    const emailList = `${email}, alina.nguon@gmail.com`
+    if(!email){
+      return errorMessage("contact", "Unable to send your email");
+    }
+    await sendEmail(emailList, message)
+    return successMessage('contact', `Please check your inbox`);
+
+    
+  }
+
+
 }

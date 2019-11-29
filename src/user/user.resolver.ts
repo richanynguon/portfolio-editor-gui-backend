@@ -1,7 +1,7 @@
 import {
-  Resolver, 
-  Mutation, 
-  Context, 
+  Resolver,
+  Mutation,
+  Context,
   Args,
 } from '@nestjs/graphql';
 import { SignUpInput } from './inputs/signupInput';
@@ -10,6 +10,7 @@ import { ErrorResponse } from './shared/errorResponse';
 import { SuccessResponse } from './shared/successResponse';
 import { LoginInput } from './inputs/loginInput';
 import { MyContext } from 'src/types/myContext';
+import { ContactInput } from './inputs/contactInput';
 
 @Resolver('User')
 export class UserResolver {
@@ -36,8 +37,15 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async logout(
     @Context() ctx: MyContext,
-  ) { 
+  ) {
     return this.userService.logout(ctx)
+  }
+
+  @Mutation(() => [ErrorResponse] || [SuccessResponse])
+  async sendBalooEmail(
+    @Args('contactIput') {email, message}: ContactInput
+  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+    return this.userService.sendBalooEmail(email, message);
   }
 
 }

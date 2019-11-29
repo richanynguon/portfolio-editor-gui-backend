@@ -1,7 +1,7 @@
 import * as nodemailer from 'nodemailer';
 import { SENDGRID_USERNAME, SENDGRID_API_KEY } from 'src/constants';
 
-export const sendEmail = async (email: string, link: string) => {
+export const sendEmail = async (email: string, message:string) => {
 
   let transporter = nodemailer.createTransport({
     host: 'smtp.sendgrid.net',
