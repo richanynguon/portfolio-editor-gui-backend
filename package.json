@@ -28,6 +28,7 @@
     "@types/express-session": "^1.15.16",
     "apollo-server-express": "^2.9.12",
     "bcryptjs": "^2.4.3",
+    "connect-redis": "^4.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3"
