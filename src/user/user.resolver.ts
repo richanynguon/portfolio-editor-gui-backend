@@ -1,4 +1,9 @@
-import { Resolver } from '@nestjs/graphql';
+import { 
+  Resolver,
+ } from '@nestjs/graphql';
 
 @Resolver('User')
-export class UserResolver {}
+export class UserResolver {
+
+  
+}
