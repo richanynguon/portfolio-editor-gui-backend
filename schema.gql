@@ -26,6 +26,24 @@ type Mutation {
   sendBalooEmail(contactIput: ContactInput!): [ErrorResponse!]!
 }
 
+type Project {
+  id: Float!
+  title: String!
+  project_focus: String!
+  project_github: String!
+  project_stack: String!
+  project_photo: String!
+  userId: String!
+  projectVote: [ProjectVote!]!
+}
+
+type ProjectVote {
+  id: Float!
+  option: String!
+  votes: Float!
+  projectId: Float!
+}
+
 type Query {
   hello: String!
 }

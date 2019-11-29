@@ -11,6 +11,8 @@ import { Request } from 'express';
 import { LoginInput } from './inputs/loginInput';
 import { MyContext } from 'src/types/myContext';
 import { sendEmail } from 'src/utils/sendEmail';
+import { ProfileInput } from './inputs/profileInput';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -19,6 +21,14 @@ export class UserService {
     private readonly userRepo: UserRepository
   ) { }
 
+  async getUser(user_name: string): Promise<ErrorResponse[] | User> {
+    const user = await this.userRepo.findOne({ where: { user_name } });
+    if (!user) {
+      return errorMessage('user', 'Unable to find the user you are looking for')
+    }
+    return user;
+  }
+
   async signup(
     signupInput: SignUpInput
   ): Promise<ErrorResponse[] | SuccessResponse[]> {
@@ -26,10 +36,10 @@ export class UserService {
     if (userExist) {
       return errorMessage("signup", "Email has already been taken");
     }
-    await this.userRepo.save({ ...signupInput })
+    const newUser = await this.userRepo.save({ ...signupInput })
     return successMessage(
       'signup',
-      `Account with email: ${signupInput.email} has been created`
+      `Account with email: ${signupInput.email} has been created with id: ${newUser.id}`
     );
   }
 
@@ -52,7 +62,7 @@ export class UserService {
     }
     req.session.userId = user.id;
 
-    return successMessage('login', `Welcome ${user.user_name}`);
+    return successMessage('login', `${user.user_name}`);
   }
 
   async logout(cxt: MyContext): Promise<ErrorResponse[] | SuccessResponse[]> {
@@ -75,9 +85,20 @@ export class UserService {
     }
     await sendEmail(emailList, message, name)
     return successMessage('contact', `Please check your inbox`);
-
-
   }
 
+  async editProfile(
+    profileInput: ProfileInput,
+  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+    const userExist = await this.userRepo.findOne({ where: { user_name: profileInput.user_name } });
+    if (!userExist) {
+      return errorMessage("profile", "The username you entered did not match");
+    }
+    if (!profileInput) {
+      return errorMessage('profile', 'Please enter information to update')
+    }
+    await this.userRepo.update({ id: userExist.id }, { ...profileInput })
+    return successMessage('profile', 'You succesfully updated your profile information')
 
+  }
 }

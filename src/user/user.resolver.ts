@@ -12,6 +12,8 @@ import { SuccessResponse } from './shared/successResponse';
 import { LoginInput } from './inputs/loginInput';
 import { MyContext } from 'src/types/myContext';
 import { ContactInput } from './inputs/contactInput';
+import { ProfileInput } from './inputs/profileInput';
+import { User } from './user.entity';
 
 @Resolver('User')
 export class UserResolver {
@@ -19,9 +21,9 @@ export class UserResolver {
     private readonly userService: UserService
   ) { }
 
-  @Query(() => String)
-  async hello() {
-    return 'Welp hey';
+  @Query(() =>[ErrorResponse] || User)
+  async getUser(user_name: string) {
+    return this.userService.getUser(user_name);
   }
 
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
@@ -53,5 +55,13 @@ export class UserResolver {
   ): Promise<ErrorResponse[] | [SuccessResponse]> {
     return this.userService.sendBalooEmail(email, message, name);
   }
+
+  @Mutation(() => [ErrorResponse] || [SuccessResponse])
+  async editProfile(
+    @Args('profileArgs') profileInput: ProfileInput
+  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+    return this.userService.editProfile(profileInput);
+  }
+
 
 }

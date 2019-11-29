@@ -16,28 +16,28 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_location: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_github: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_twitter: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_linkedin: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_stack: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_learning: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_interested: string;
 
-  @Column()
+  @Column({ nullable: true })
   user_involved: string;
 
   @OneToMany(() => Project, project => project.user)
