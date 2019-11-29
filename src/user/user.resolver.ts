@@ -15,6 +15,8 @@ import { ContactInput } from './inputs/contactInput';
 import { ProfileInput } from './inputs/profileInput';
 import { User } from './user.entity';
 
+
+
 @Resolver('User')
 export class UserResolver {
   constructor(

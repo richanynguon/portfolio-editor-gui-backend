@@ -26,7 +26,8 @@ type Mutation {
   sendBalooEmail(contactIput: ContactInput!): [ErrorResponse!]!
   editProfile(profileArgs: ProfileInput!): [ErrorResponse!]!
   createProject(title: String!, project_focus: String!, project_github: String!, project_stack: String!, project_photo: String!, userId: String!): Boolean!
-  editProject(title: String!, project_focus: String!, project_github: String!, project_stack: String!, project_photo: String!): [ErrorResponse!]!
+  editProject(projectId: Float!, title: String!, project_focus: String!, project_github: String!, project_stack: String!, project_photo: String!): [ErrorResponse!]!
+  upVoteProject(projectVoteId: Float!): Boolean!
 }
 
 input ProfileInput {

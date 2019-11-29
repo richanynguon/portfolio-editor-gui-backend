@@ -2,7 +2,9 @@ import {
   Resolver,
   Mutation,
   Args,
-  Query
+  Query,
+  Context,
+
 } from '@nestjs/graphql';
 import { ProjectService } from './project.service';
 import { Project } from './project.entity';
@@ -12,6 +14,9 @@ import { AllProjectsArgs } from './args/allProjectsArgs.args';
 import { EditProjectArgs } from './args/editProjectArgs';
 import { ErrorResponse } from '../user/shared/errorResponse';
 import { SuccessResponse } from '../user/shared/successResponse';
+import { MyContext } from '../types/myContext';
+
+
 
 @Resolver(() => Project)
 export class ProjectResolver {
@@ -42,12 +47,25 @@ export class ProjectResolver {
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async editProject(
     @Args() editProjectArgs: EditProjectArgs,
-    projectId: number
+    @Args('projectId') projectId: number
   ): Promise<ErrorResponse[] | SuccessResponse[]> {
-   return  this.projectService.editProject(projectId, editProjectArgs)
+    return this.projectService.editProject(projectId, editProjectArgs)
   }
 
-  // @Mutation()
-  // async upVoteProject() { }
+  @Mutation(() => Boolean)
+  async upVoteProject(
+    @Context() ctx: MyContext,
+    @Args('projectVoteId') projectVoteId: number
+  ): Promise<Boolean> {
+    return this.projectService.upVoteProject(ctx, projectVoteId)
+  }
+
+  @Mutation(() => Boolean)
+  async deleteProject(
+    @Context() ctx: MyContext,
+    @Args('id') id: number
+  ): Promise<Boolean> {
+    return this.projectService.deleteProject(ctx, id)
+  }
 
 }

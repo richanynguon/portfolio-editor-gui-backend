@@ -9,6 +9,9 @@ import { errorMessage } from '../user/shared/errorMessage';
 import { successMessage } from '../user/shared/successMessage';
 import { ErrorResponse } from '../user/shared/errorResponse';
 import { SuccessResponse } from '../user/shared/successResponse';
+import { MyContext } from '../types/myContext';
+import { redis } from '../redis';
+import { VOTE_PREFIX } from '../constants';
 
 @Injectable()
 export class ProjectService {
@@ -75,15 +78,60 @@ export class ProjectService {
     editProject: EditProjectArgs
   ): Promise<ErrorResponse[] | SuccessResponse[]> {
 
-    const updatedProject = 
+    const updatedProject =
       await this.projectRepo.update(projectId, editProject)
-    if(!updatedProject){
+    if (!updatedProject) {
       return errorMessage('update_project', 'Sorry unable to update project')
     }
     return successMessage('update_project', `Successfully updated project`)
-  
+
   }
 
-  // async upVoteProject() { }
+  async upVoteProject(
+    ctx: MyContext,
+    projectVoteId: number
+  ): Promise<Boolean> {
+
+    const projectVote =
+      await this.projectVoteRepo.findOne({
+        where: { id: projectVoteId }
+      })
+
+    const ip =
+      ctx.req.header('x-forwarded-for') || ctx.req.connection.remoteAddress;
+
+    if (ip) {
+      const hasIp = await redis.sismember(
+        `${VOTE_PREFIX}${projectVote.projectId}`, ip
+      );
+      if (hasIp) {
+        return false
+      }
+    }
+
+    await this.projectVoteRepo.update(
+      { id: projectVoteId },
+      { votes: projectVote.votes + 1 }
+    )
+
+    await redis.sadd(`${VOTE_PREFIX}${projectVote.projectId}`, ip);
+
+    return true;
+  }
+
+  async deleteProject(
+    ctx: MyContext,
+    id: number
+  ): Promise<Boolean>{
+    try{
+      await this.projectRepo.delete({id})
+      const ip =
+      ctx.req.header('x-forwarded-for') || ctx.req.connection.remoteAddress;
+      await redis.srem(`${VOTE_PREFIX}${id}`, ip);
+    }catch(err){
+      return false;
+    }
+    return true;
+  }
 
 }
