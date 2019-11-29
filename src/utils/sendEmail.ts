@@ -21,7 +21,5 @@ export const sendEmail = async (email: string, message:string, name:string) => {
     html: `<p>Hello ${name},</p><p>I hope you enjoyed looking through my first project using the react, typescript, nest, graphql, and apollo stack! I am happy to hear you would like to connect. I just wanted to let you I did recieve your email and will response once I review your message. For now enjoy a picture of my dog who is happy to see you as well! Sending you all the best energy!</p><p>warm regards,</p><p>Richany Nguon and Baloo</p><img src='https://i.imgur.com/ANljkMP.gif'alt='dog being super happy'> <br/><br/><p>Your message:</p><br/><p>${message}</p>`
   });
 
-  console.log("Message sent: %s", info.messageId);
-
 
 }
