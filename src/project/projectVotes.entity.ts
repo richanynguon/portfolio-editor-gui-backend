@@ -2,8 +2,8 @@ import { ObjectType, Field } from 'type-graphql';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
 import { Project } from './project.entity';
 
-@ObjectType()
 @Entity()
+@ObjectType()
 export class ProjectVote {
   @Field()
   @PrimaryGeneratedColumn()

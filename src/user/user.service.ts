@@ -78,7 +78,7 @@ export class UserService {
     email: string,
     message: string,
     name: string,
-  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+  ): Promise<ErrorResponse[] | SuccessResponse[]> {
     const emailList = `${email}, alina.nguon@gmail.com`
     if (!email) {
       return errorMessage("contact", "Unable to send your email");
@@ -89,7 +89,7 @@ export class UserService {
 
   async editProfile(
     profileInput: ProfileInput,
-  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+  ): Promise<ErrorResponse[] | SuccessResponse[]> {
     const userExist = await this.userRepo.findOne({ where: { user_name: profileInput.user_name } });
     if (!userExist) {
       return errorMessage("profile", "The username you entered did not match");

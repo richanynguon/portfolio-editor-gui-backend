@@ -10,7 +10,7 @@ import { UserService } from './user.service';
 import { ErrorResponse } from './shared/errorResponse';
 import { SuccessResponse } from './shared/successResponse';
 import { LoginInput } from './inputs/loginInput';
-import { MyContext } from 'src/types/myContext';
+import { MyContext } from '../types/myContext';
 import { ContactInput } from './inputs/contactInput';
 import { ProfileInput } from './inputs/profileInput';
 import { User } from './user.entity';
@@ -41,7 +41,7 @@ export class UserResolver {
   async login(
     @Args('loginInput') loginInput: LoginInput,
     @Context() ctx: MyContext
-  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+  ): Promise<ErrorResponse[] | SuccessResponse[]> {
     return this.userService.login(loginInput, ctx.req)
   }
 
@@ -56,14 +56,14 @@ export class UserResolver {
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async sendBalooEmail(
     @Args('contactIput') { email, message, name }: ContactInput
-  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+  ): Promise<ErrorResponse[] | SuccessResponse[]> {
     return this.userService.sendBalooEmail(email, message, name);
   }
 
   @Mutation(() => [ErrorResponse] || [SuccessResponse])
   async editProfile(
     @Args('profileArgs') profileInput: ProfileInput
-  ): Promise<ErrorResponse[] | [SuccessResponse]> {
+  ): Promise<ErrorResponse[] | SuccessResponse[]> {
     return this.userService.editProfile(profileInput);
   }
 

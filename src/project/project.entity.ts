@@ -3,8 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "ty
 import { User } from "src/user/user.entity";
 import { ProjectVote } from "./projectVotes.entity";
 
-@ObjectType()
 @Entity('project')
+@ObjectType()
 export class Project {
 
   @Field()

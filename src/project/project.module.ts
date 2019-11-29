@@ -11,6 +11,6 @@ import { ProjectVoteRepository } from './projectVotes.repository';
       ProjectRepository, ProjectVoteRepository,
     ]),
   ],
-  providers: [ProjectResolver, ProjectService]
+  providers: [ ProjectService, ProjectResolver]
 })
 export class ProjectModule { }

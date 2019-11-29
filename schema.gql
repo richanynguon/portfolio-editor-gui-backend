@@ -25,6 +25,8 @@ type Mutation {
   logout: [ErrorResponse!]!
   sendBalooEmail(contactIput: ContactInput!): [ErrorResponse!]!
   editProfile(profileArgs: ProfileInput!): [ErrorResponse!]!
+  createProject(title: String!, project_focus: String!, project_github: String!, project_stack: String!, project_photo: String!, userId: String!): Boolean!
+  editProject(title: String!, project_focus: String!, project_github: String!, project_stack: String!, project_photo: String!): [ErrorResponse!]!
 }
 
 input ProfileInput {
@@ -59,6 +61,8 @@ type ProjectVote {
 
 type Query {
   getUser(user_name: String!): User!
+  getProject(id: Float!): Project!
+  getAllProjects(take: Float!, skip: Float!): [Project!]!
 }
 
 input SignUpInput {
