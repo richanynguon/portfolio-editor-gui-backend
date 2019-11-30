@@ -10,6 +10,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'portfolio',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
-  dropSchema: true,
+  // dropSchema: true,
   subscribers:[__dirname + '/../subscribers/*.subscriber{.ts,.js}'],
 }

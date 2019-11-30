@@ -7,9 +7,9 @@ export class ContactInput implements Partial<User>{
   @Field()
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   message: string;
 
-  @Field()
+  @Field({ nullable: true })
   name: string;
 }

@@ -3,15 +3,15 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-input ContactInput {
-  email: String!
-  message: String!
-  name: String!
-}
-
-type ErrorResponse {
+type ActionResponse {
   path: String!
   message: String!
+}
+
+input ContactInput {
+  email: String!
+  message: String
+  name: String
 }
 
 input LoginInput {
@@ -20,23 +20,27 @@ input LoginInput {
 }
 
 type Mutation {
-  signup(signupInput: SignUpInput!): [ErrorResponse!]!
-  login(loginInput: LoginInput!): [ErrorResponse!]!
-  logout: [ErrorResponse!]!
-  sendBalooEmail(contactIput: ContactInput!): [ErrorResponse!]!
-  editProfile(profileArgs: ProfileInput!): [ErrorResponse!]!
+  signup(signupInput: SignUpInput!): [ActionResponse!]!
+  login(loginInput: LoginInput!): [ActionResponse!]!
+  logout: [ActionResponse!]!
+  sendBalooEmail(contactIput: ContactInput!): [ActionResponse!]!
+  editProfile(profileArgs: ProfileInput!): [ActionResponse!]!
+  createProject(title: String!, project_focus: String, project_github: String!, project_stack: String!, project_photo: String): Boolean!
+  editProject(id: Float!, title: String, project_focus: String, project_github: String, project_stack: String, project_photo: String): [ActionResponse!]!
+  upVoteProject(id: Float!): Boolean!
+  deleteProject(id: Float!): Boolean!
 }
 
 input ProfileInput {
-  user_name: String!
-  user_location: String!
-  user_github: String!
-  user_twitter: String!
-  user_linkedin: String!
-  user_stack: String!
-  user_learning: String!
-  user_interested: String!
-  user_involved: String!
+  user_name: String
+  user_location: String
+  user_github: String
+  user_twitter: String
+  user_linkedin: String
+  user_stack: String
+  user_learning: String
+  user_interested: String
+  user_involved: String
 }
 
 type Project {
@@ -59,17 +63,14 @@ type ProjectVote {
 
 type Query {
   getUser(user_name: String!): User!
+  getProject(id: Float!): Project!
+  getAllProjects(take: Float!, skip: Float!): [Project!]!
 }
 
 input SignUpInput {
   user_name: String!
   email: String!
   password: String!
-}
-
-type SuccessResponse {
-  path: String!
-  message: String!
 }
 
 type User {

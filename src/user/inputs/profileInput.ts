@@ -4,30 +4,30 @@ import { User } from "../user.entity";
 @InputType()
 export class ProfileInput implements Partial<User>{
 
-  @Field()
+  @Field({ nullable: true })
   user_name: string;
   
-  @Field()
+  @Field({ nullable: true })
   user_location: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_github: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_twitter: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_linkedin: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_stack: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_learning: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_interested: string;
 
-  @Field()
+  @Field({ nullable: true })
   user_involved: string;
 }

@@ -3,21 +3,20 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "ty
 import { User } from "src/user/user.entity";
 import { ProjectVote } from "./projectVotes.entity";
 
-@ObjectType()
 @Entity('project')
+@ObjectType()
 export class Project {
 
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
 
-
   @Field()
   @Column('text')
   title: string;
 
   @Field()
-  @Column()
+  @Column({ default: '' })
   project_focus: string;
 
   @Field()
@@ -29,8 +28,9 @@ export class Project {
   project_stack: string;
 
   @Field()
-  @Column()
+  @Column({ default: '' })
   project_photo: string;
+  
 
   @Field()
   @Column()
