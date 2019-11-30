@@ -16,7 +16,7 @@ export class Project {
   title: string;
 
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   project_focus: string;
 
   @Field()
@@ -28,7 +28,7 @@ export class Project {
   project_stack: string;
 
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   project_photo: string;
   
 

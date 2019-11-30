@@ -5,13 +5,12 @@ import { ProjectVoteRepository } from './projectVotes.repository';
 import { CreateProjectArgs } from './args/createProjectArgs.args';
 import { Project } from './project.entity';
 import { EditProjectArgs } from './args/editProjectArgs';
-import { errorMessage } from '../user/shared/errorMessage';
-import { successMessage } from '../user/shared/successMessage';
-import { ErrorResponse } from '../user/shared/errorResponse';
-import { SuccessResponse } from '../user/shared/successResponse';
+
 import { MyContext } from '../types/myContext';
 import { redis } from '../redis';
 import { VOTE_PREFIX } from '../constants';
+import { ActionResponse } from '../shared/actionResponse';
+import { actionMessage } from '../shared/actionMessage';
 
 @Injectable()
 export class ProjectService {
@@ -27,6 +26,7 @@ export class ProjectService {
     createProjectArgs: CreateProjectArgs,
     userId: string,
   ): Promise<Boolean> {
+   await  console.log(createProjectArgs, userId)
     const {
       project_focus,
       project_github,
@@ -42,6 +42,7 @@ export class ProjectService {
       title,
       userId,
     })
+    console.log(newProject.raw[0].id)
     await this.projectVoteRepo.insert({
       option: 'upvote',
       votes: 0,
@@ -76,14 +77,14 @@ export class ProjectService {
   async editProject(
     projectId: number,
     editProject: EditProjectArgs
-  ): Promise<ErrorResponse[] | SuccessResponse[]> {
+  ): Promise<ActionResponse[]> {
 
     const updatedProject =
-      await this.projectRepo.update(projectId, editProject)
+      await this.projectRepo.update({id:projectId}, editProject)
     if (!updatedProject) {
-      return errorMessage('update_project', 'Sorry unable to update project')
+      return actionMessage('update_project', 'Sorry unable to update project')
     }
-    return successMessage('update_project', `Successfully updated project`)
+    return actionMessage('update_project', `Successfully updated project`)
 
   }
 

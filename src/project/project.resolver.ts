@@ -12,11 +12,9 @@ import { GetUserId } from './getUserId.decorator';
 import { CreateProjectArgs } from './args/createProjectArgs.args';
 import { AllProjectsArgs } from './args/allProjectsArgs.args';
 import { EditProjectArgs } from './args/editProjectArgs';
-import { ErrorResponse } from '../user/shared/errorResponse';
-import { SuccessResponse } from '../user/shared/successResponse';
+
 import { MyContext } from '../types/myContext';
-
-
+import { ActionResponse } from '../shared/actionResponse';
 
 @Resolver(() => Project)
 export class ProjectResolver {
@@ -27,6 +25,7 @@ export class ProjectResolver {
     @GetUserId() userId: string,
     @Args() createProjectArgs: CreateProjectArgs,
   ): Promise<Boolean> {
+  
     return this.projectService.createProject(createProjectArgs, userId)
   }
 
@@ -44,18 +43,18 @@ export class ProjectResolver {
     return this.projectService.getAllProjects(take, skip);
   }
 
-  @Mutation(() => [ErrorResponse] || [SuccessResponse])
+  @Mutation(() => [ActionResponse])
   async editProject(
     @Args() editProjectArgs: EditProjectArgs,
-    @Args('projectId') projectId: number
-  ): Promise<ErrorResponse[] | SuccessResponse[]> {
+    @Args('id') projectId: number
+  ): Promise<ActionResponse[]> {
     return this.projectService.editProject(projectId, editProjectArgs)
   }
 
   @Mutation(() => Boolean)
   async upVoteProject(
     @Context() ctx: MyContext,
-    @Args('projectVoteId') projectVoteId: number
+    @Args('id') projectVoteId: number
   ): Promise<Boolean> {
     return this.projectService.upVoteProject(ctx, projectVoteId)
   }

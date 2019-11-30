@@ -5,7 +5,7 @@ export class CreateProjectArgs{
   @Field()
   title: string;
   
-  @Field()
+  @Field({ nullable: true })
   project_focus: string;
 
   @Field()
@@ -14,10 +14,11 @@ export class CreateProjectArgs{
   @Field()
   project_stack: string;
 
-  @Field()
+  @Field({ nullable: true })
   project_photo: string;
 
-  @Field()
-  userId: string;
+
+
+  
   
 }

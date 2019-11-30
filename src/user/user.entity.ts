@@ -24,35 +24,35 @@ export class User {
   password: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_location: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_github: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_twitter: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_linkedin: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_stack: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_learning: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_interested: string;
   
   @Field()
-  @Column({ nullable: true })
+  @Column({ default: '' })
   user_involved: string;
 
   @OneToMany(() => Project, project => project.user)
