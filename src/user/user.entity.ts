@@ -14,6 +14,10 @@ export class User {
   @Field()
   @Column('text')
   user_name: string;
+
+  @Field()
+  @Column('text')
+  token: string;
   
   @Field()
   @Column('text')
