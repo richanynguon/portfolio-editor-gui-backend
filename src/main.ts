@@ -6,12 +6,17 @@ import { SESSION_SECRET } from './constants';
 import * as Store from 'connect-redis';
 import { redis } from './redis';
 import * as cors from 'cors';
+import * as helmet from 'helmet';
 
 
 dotenv.config()
 async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
+  app.use(helmet());
+  app.use(cors({
+    origin: ['http://localhost:3000'],
+  }))
   app.use(session({
     store: new RedisStore({
       client: redis as any,
