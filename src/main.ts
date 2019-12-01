@@ -5,6 +5,7 @@ import * as session from 'express-session'
 import { SESSION_SECRET } from './constants';
 import * as Store from 'connect-redis';
 import { redis } from './redis';
+import * as cors from 'cors';
 
 
 dotenv.config()
@@ -26,6 +27,6 @@ async function bootstrap() {
     },
 
   }))
-  await app.listen(3000);
+  await app.listen(4000);
 }
 bootstrap();
