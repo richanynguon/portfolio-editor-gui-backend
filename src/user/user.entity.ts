@@ -17,10 +17,6 @@ export class User {
 
   @Field()
   @Column('text')
-  token: string;
-  
-  @Field()
-  @Column('text')
   email: string;
   
   @Field()

@@ -11,6 +11,7 @@ import { ProfileInput } from './inputs/profileInput';
 import { User } from './user.entity';
 import { ActionResponse } from '../shared/actionResponse';
 import { actionMessage } from '../shared/actionMessage';
+import { generateJWT } from '../utils/generateToken';
 
 @Injectable()
 export class UserService {
@@ -21,7 +22,7 @@ export class UserService {
 
   async getUser(user_name: string): Promise<User | ActionResponse[]> {
     const user = await this.userRepo.findOne({ where: { user_name } });
-    if(!user){
+    if (!user) {
       return actionMessage('user', 'Unable to find the user you are looking for')
     }
     return user;
@@ -29,7 +30,7 @@ export class UserService {
 
   async signup(
     signupInput: SignUpInput
-  ): Promise< ActionResponse[]> {
+  ): Promise<ActionResponse[]> {
     const userExist = await this.userRepo.findOne({ where: { email: signupInput.email } });
     if (userExist) {
       return actionMessage("signup", "Email has already been taken");
@@ -59,8 +60,9 @@ export class UserService {
       return actionMessage("login", "Your account is not allowed to have access");
     }
     req.session.userId = user.id;
+    const token = await generateJWT(user)
 
-    return actionMessage('login', `${user.user_name}`);
+    return actionMessage('login', `${user.user_name},${token}`);
   }
 
   async logout(cxt: MyContext): Promise<ActionResponse[]> {
