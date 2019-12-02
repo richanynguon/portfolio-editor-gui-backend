@@ -7,8 +7,7 @@ import * as Store from 'connect-redis';
 import { redis } from './redis';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
-import {origin} from './config/index'
-
+import { origin } from './config/index'
 
 dotenv.config()
 async function bootstrap() {
@@ -28,11 +27,11 @@ async function bootstrap() {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',  
+      secure: process.env.NODE_ENV === 'production',
       maxAge: 1000 * 60 * 60 * 24,
     },
 
   }))
-  await app.listen(4000);
+  await app.listen(process.env.PORT || 4000);
 }
 bootstrap();
