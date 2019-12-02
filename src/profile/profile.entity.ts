@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typ
 import { ObjectType, Field } from 'type-graphql';
 import { User } from '../user/user.entity';
 
-@Entity()
+@Entity('profile')
 @ObjectType()
 export class Profile {
 
