@@ -55,6 +55,10 @@ export class ProfileService {
     return await this.ProfileRepo.findOne({where: { id }})
   }
 
+  async getAllProfiles(): Promise<Profile[]> {
+    return this.ProfileRepo.createQueryBuilder('profile').getMany();
+  }
+
 
   async editProfile(
     userId: string,

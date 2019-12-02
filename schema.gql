@@ -68,6 +68,7 @@ type Query {
   getUserProfile(user_name: String!): User!
   getProject(id: Float!): Project!
   getAllProjects(take: Float!, skip: Float!): [Project!]!
+  getAllProfiles: [Profile!]!
   getProfile(id: Float!): Profile!
 }
 
