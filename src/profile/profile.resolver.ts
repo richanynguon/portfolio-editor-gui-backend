@@ -27,6 +27,11 @@ export class ProfileResolver {
     return this.ProfileService.createProfile(createProfileArgs, userId)
   }
 
+  @Query(() => [Profile])
+  async getAllProfiles(): Promise<Profile[]> {
+    return this.ProfileService.getAllProfiles();
+  }
+
   @Query(() => Profile)
   async getProfile(
     @Args('id') id: number,
