@@ -7,7 +7,6 @@ import { Request } from 'express';
 import { LoginInput } from './inputs/loginInput';
 import { MyContext } from 'src/types/myContext';
 import { sendEmail } from 'src/utils/sendEmail';
-import { ProfileInput } from './inputs/profileInput';
 import { User } from './user.entity';
 import { ActionResponse } from '../shared/actionResponse';
 import { actionMessage } from '../shared/actionMessage';
@@ -20,7 +19,7 @@ export class UserService {
     private readonly userRepo: UserRepository
   ) { }
 
-  async getUser(user_name: string): Promise<User | ActionResponse[]> {
+  async getUserProfile(user_name: string): Promise<User | ActionResponse[]> {
     const user = await this.userRepo.findOne({ where: { user_name } });
     if (!user) {
       return actionMessage('user', 'Unable to find the user you are looking for')
@@ -87,18 +86,5 @@ export class UserService {
     return actionMessage('contact', `Please check your inbox`);
   }
 
-  async editProfile(
-    profileInput: ProfileInput,
-  ): Promise<ActionResponse[]> {
-    const userExist = await this.userRepo.findOne({ where: { user_name: profileInput.user_name } });
-    if (!userExist) {
-      return actionMessage("profile", "The username you entered did not match");
-    }
-    if (!profileInput) {
-      return actionMessage('profile', 'Please enter information to update')
-    }
-    await this.userRepo.update({ id: userExist.id }, { ...profileInput })
-    return actionMessage('profile', 'You succesfully updated your profile information')
 
-  }
 }

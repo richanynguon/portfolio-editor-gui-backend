@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm'
 import { Project } from '../project/project.entity';
 import { ObjectType, Field } from 'type-graphql';
+import { Profile } from '../profile/profile.entity';
 
 
 @Entity('users')
@@ -23,38 +24,9 @@ export class User {
   @Column()
   password: string;
   
-  @Field()
-  @Column({ default: '' })
-  user_location: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_github: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_twitter: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_linkedin: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_stack: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_learning: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_interested: string;
-  
-  @Field()
-  @Column({ default: '' })
-  user_involved: string;
-
   @OneToMany(() => Project, project => project.user)
   project: Promise<Project[]>
+
+  @OneToOne(() => Profile, profile => profile.user)
+  profile: Promise<Profile>
 }

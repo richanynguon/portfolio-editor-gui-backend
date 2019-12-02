@@ -5,9 +5,8 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeOrmConfig } from './config/typeOrmConfig';
-import { ProjectResolver } from './project/project.resolver';
-import { ProjectService } from './project/project.service';
 import { ProjectModule } from './project/project.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -20,7 +19,8 @@ import { ProjectModule } from './project/project.module';
     }),
     UserModule,
     TypeOrmModule.forRoot(typeOrmConfig),
-    ProjectModule
+    ProjectModule,
+    ProfileModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,7 +10,6 @@ import { UserService } from './user.service';
 import { LoginInput } from './inputs/loginInput';
 import { MyContext } from '../types/myContext';
 import { ContactInput } from './inputs/contactInput';
-import { ProfileInput } from './inputs/profileInput';
 import { User } from './user.entity';
 import { ActionResponse } from '../shared/actionResponse';
 
@@ -25,10 +24,10 @@ export class UserResolver {
 
 
   @Query(() => User || [ActionResponse] )
-  async getUser(
+  async getUserProfile(
     @Args('user_name') user_name: string
     ): Promise<User | ActionResponse[]> {
-    return this.userService.getUser(user_name);
+    return this.userService.getUserProfile(user_name);
   }
 
   @Mutation(() => [ActionResponse])
@@ -61,12 +60,7 @@ export class UserResolver {
     return this.userService.sendBalooEmail(email, message, name);
   }
 
-  @Mutation(() => [ActionResponse])
-  async editProfile(
-    @Args('profileArgs') profileInput: ProfileInput
-  ): Promise<ActionResponse[]> {
-    return this.userService.editProfile(profileInput);
-  }
+
 
 
 }
