@@ -54,8 +54,7 @@ export class ProjectService {
     id: number,
   ): Promise<Project> {
     return await this.projectRepo.findOne({
-      where: { id },
-      relations: ['projectVotes']
+      where: { id }
     })
   }
 
