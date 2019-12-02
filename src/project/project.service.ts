@@ -42,7 +42,6 @@ export class ProjectService {
       title,
       userId,
     })
-    console.log(newProject.raw[0].id)
     await this.projectVoteRepo.insert({
       option: 'upvote',
       votes: 0,

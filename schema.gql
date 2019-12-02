@@ -24,23 +24,26 @@ type Mutation {
   login(loginInput: LoginInput!): [ActionResponse!]!
   logout: [ActionResponse!]!
   sendBalooEmail(contactIput: ContactInput!): [ActionResponse!]!
-  editProfile(profileArgs: ProfileInput!): [ActionResponse!]!
   createProject(title: String!, project_focus: String, project_github: String!, project_stack: String!, project_photo: String): Boolean!
   editProject(id: Float!, title: String, project_focus: String, project_github: String, project_stack: String, project_photo: String): [ActionResponse!]!
   upVoteProject(id: Float!): Boolean!
   deleteProject(id: Float!): Boolean!
+  createProfile(bio: String!, location: String, github: String, twitter: String, linkedin: String, stack: String, learning: String, interested: String, involved: String): [ActionResponse!]!
+  editProfile(bio: String, location: String, github: String, twitter: String, linkedin: String, stack: String, learning: String, interested: String, involved: String): [ActionResponse!]!
 }
 
-input ProfileInput {
-  user_name: String
-  user_location: String
-  user_github: String
-  user_twitter: String
-  user_linkedin: String
-  user_stack: String
-  user_learning: String
-  user_interested: String
-  user_involved: String
+type Profile {
+  id: Float!
+  bio: String!
+  location: String!
+  github: String!
+  twitter: String!
+  linkedin: String!
+  stack: String!
+  learning: String!
+  interested: String!
+  involved: String!
+  userId: String!
 }
 
 type Project {
@@ -62,9 +65,10 @@ type ProjectVote {
 }
 
 type Query {
-  getUser(user_name: String!): User!
+  getUserProfile(user_name: String!): User!
   getProject(id: Float!): Project!
   getAllProjects(take: Float!, skip: Float!): [Project!]!
+  getProfile(id: Float!): Profile!
 }
 
 input SignUpInput {
@@ -78,12 +82,17 @@ type User {
   user_name: String!
   email: String!
   password: String!
-  user_location: String!
-  user_github: String!
-  user_twitter: String!
-  user_linkedin: String!
-  user_stack: String!
-  user_learning: String!
-  user_interested: String!
-  user_involved: String!
+}
+
+type UserProfile {
+  id: Float!
+  location: String!
+  github: String!
+  twitter: String!
+  linkedin: String!
+  stack: String!
+  learning: String!
+  interested: String!
+  involved: String!
+  userId: String!
 }
