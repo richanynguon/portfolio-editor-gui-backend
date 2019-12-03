@@ -11,8 +11,6 @@ import { User } from './user.entity';
 import { ActionResponse } from '../shared/actionResponse';
 import { actionMessage } from '../shared/actionMessage';
 import { generateJWT } from '../utils/generateToken';
-import { LoginResponse } from './responses/loginResponse';
-import { loginMessage } from './responses/loginMessage';
 
 @Injectable()
 export class UserService {
@@ -47,7 +45,7 @@ export class UserService {
   async login(
     loginInput: LoginInput,
     req: Request
-  ): Promise<ActionResponse[] | LoginResponse[]> {
+  ): Promise<ActionResponse[]> {
     const user = await this.userRepo.findOne({
       where: { email: loginInput.email }
     })
@@ -64,7 +62,7 @@ export class UserService {
     req.session.userId = user.id;
     const token = await generateJWT(user)
 
-    return loginMessage(token, user.user_name)
+    return actionMessage(token, user.user_name)
   }
 
   async logout(cxt: MyContext): Promise<ActionResponse[]> {

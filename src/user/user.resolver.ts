@@ -12,7 +12,7 @@ import { MyContext } from '../types/myContext';
 import { ContactInput } from './inputs/contactInput';
 import { User } from './user.entity';
 import { ActionResponse } from '../shared/actionResponse';
-import { LoginResponse } from './responses/loginResponse';
+
 
 
 
@@ -38,11 +38,11 @@ export class UserResolver {
     return this.userService.signup(signupInput)
   }
 
-  @Mutation(() => [ActionResponse] || [LoginResponse])
+  @Mutation(() => [ActionResponse])
   async login(
     @Args('loginInput') loginInput: LoginInput,
     @Context() ctx: MyContext
-  ): Promise<ActionResponse[] | LoginResponse[]> {
+  ): Promise<ActionResponse[]> {
     return this.userService.login(loginInput, ctx.req)
   }
 
