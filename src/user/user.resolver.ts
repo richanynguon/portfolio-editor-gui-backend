@@ -41,7 +41,7 @@ export class UserResolver {
   async login(
     @Args('loginInput') loginInput: LoginInput,
     @Context() ctx: MyContext
-  ): Promise<ActionResponse[]> {
+  ): Promise<ActionResponse[] | Object> {
     return this.userService.login(loginInput, ctx.req)
   }
 
