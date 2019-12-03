@@ -13,12 +13,15 @@ import { Profile } from './profile.entity';
 import { ProfileService } from './profile.service';
 import { CreateProfileArgs } from './args/createProfileArgs.args';
 import { EditProfileArgs } from './args/editProfileArgs.args';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../project/auth.guard';
 
 @Resolver(() => Profile)
 export class ProfileResolver {
   constructor(private readonly ProfileService: ProfileService) { }
 
   @Mutation(() => [ActionResponse])
+  @UseGuards(AuthGuard)
   async createProfile(
     @GetUserId() userId: string,
     @Args() createProfileArgs: CreateProfileArgs,
@@ -42,6 +45,7 @@ export class ProfileResolver {
 
 
   @Mutation(() => [ActionResponse])
+  @UseGuards(AuthGuard)
   async editProfile(
     @Args() editProfileArgs: EditProfileArgs,
     @GetUserId() userId: string,

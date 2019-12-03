@@ -31,7 +31,8 @@ export class UserService {
     signupInput: SignUpInput
   ): Promise<ActionResponse[]> {
     const userExist = await this.userRepo.findOne({ where: { email: signupInput.email } });
-    if (userExist) {
+    const userExistName = await this.userRepo.findOne({ where: { user_name: signupInput.user_name } });
+    if (userExist || userExistName) {
       return actionMessage("signup", "Email has already been taken");
     }
     const newUser = await this.userRepo.save({ ...signupInput })
@@ -44,7 +45,7 @@ export class UserService {
   async login(
     loginInput: LoginInput,
     req: Request
-  ): Promise<ActionResponse[]> {
+  ): Promise<ActionResponse[] | Object> {
     const user = await this.userRepo.findOne({
       where: { email: loginInput.email }
     })
@@ -61,7 +62,12 @@ export class UserService {
     req.session.userId = user.id;
     const token = await generateJWT(user)
 
-    return actionMessage('login', `${user.user_name},${token}`);
+    return [
+      {
+        auth: token,
+        user_name: user.user_name,
+      },
+    ];
   }
 
   async logout(cxt: MyContext): Promise<ActionResponse[]> {

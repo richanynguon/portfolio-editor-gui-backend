@@ -15,12 +15,15 @@ import { EditProjectArgs } from './args/editProjectArgs';
 
 import { MyContext } from '../types/myContext';
 import { ActionResponse } from '../shared/actionResponse';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from './auth.guard';
 
 @Resolver(() => Project)
 export class ProjectResolver {
   constructor(private readonly projectService: ProjectService) { }
 
   @Mutation(() => Boolean)
+  @UseGuards(AuthGuard)
   async createProject(
     @GetUserId() userId: string,
     @Args() createProjectArgs: CreateProjectArgs,
@@ -44,6 +47,7 @@ export class ProjectResolver {
   }
 
   @Mutation(() => [ActionResponse])
+  @UseGuards(AuthGuard)
   async editProject(
     @Args() editProjectArgs: EditProjectArgs,
     @Args('id') projectId: number
@@ -60,6 +64,7 @@ export class ProjectResolver {
   }
 
   @Mutation(() => Boolean)
+  @UseGuards(AuthGuard)
   async deleteProject(
     @Context() ctx: MyContext,
     @Args('id') id: number
