@@ -15,9 +15,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.use(cors({
-    origin: 
-      'https://www.richanynguon.com'
-    ,
+    origin:'https://www.richanynguon.com',
     credentials: true
 
   }))
