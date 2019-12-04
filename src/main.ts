@@ -25,7 +25,7 @@ async function bootstrap() {
     name: "portfolio",
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       httpOnly: true,
       secure: true,
