@@ -14,10 +14,10 @@ async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
-  app.enableCors({
-    origin:'https://richanynguon.com',
-    credentials: true
-  })
+  // app.enableCors({
+  //   origin:'https://richanynguon.com',
+  //   credentials: true
+  // })
   app.use(session({
     store: new RedisStore({
       client: redis as any,
