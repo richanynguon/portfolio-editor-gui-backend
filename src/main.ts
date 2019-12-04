@@ -16,6 +16,8 @@ async function bootstrap() {
   app.use(helmet());
   app.use(cors({
     origin: origin,
+    credentials: true,
+    
   }))
   app.use(session({
     store: new RedisStore({

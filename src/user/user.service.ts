@@ -38,7 +38,7 @@ export class UserService {
     const newUser = await this.userRepo.save({ ...signupInput })
     return actionMessage(
       'signup',
-      `Account with email: ${signupInput.email} has been created with id: ${newUser.id}`
+      `Account with email: ${signupInput.email} has been created`
     );
   }
 
