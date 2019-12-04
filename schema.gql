@@ -19,11 +19,6 @@ input LoginInput {
   password: String!
 }
 
-type LoginResponse {
-  auth: String!
-  user_name: String!
-}
-
 type Mutation {
   signup(signupInput: SignUpInput!): [ActionResponse!]!
   login(loginInput: LoginInput!): [ActionResponse!]!
