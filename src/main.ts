@@ -7,7 +7,7 @@ import * as Store from 'connect-redis';
 import { redis } from './redis';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
-import { origin } from './config/index'
+
 
 dotenv.config()
 async function bootstrap() {
