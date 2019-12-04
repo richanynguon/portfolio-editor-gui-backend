@@ -16,7 +16,6 @@ async function bootstrap() {
   app.use(helmet());
   app.use(cors({
     origin: 
-      'https://richanynguon.com'||
       'https://www.richanynguon.com'
     ,
     credentials: true
