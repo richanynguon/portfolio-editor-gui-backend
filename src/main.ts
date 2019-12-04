@@ -15,9 +15,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.use(cors({
-    origin:'https://www.richanynguon.com',
+    origin:'https://richanynguon.com',
     credentials: true
-
   }))
   app.use(session({
     store: new RedisStore({
