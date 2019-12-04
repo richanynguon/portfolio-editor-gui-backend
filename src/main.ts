@@ -15,7 +15,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.use(cors({
-    origin: "https://www.richanynguon.com",
+    origin: 'https://richanynguon.com',
     credentials: true
 
   }))
@@ -25,10 +25,10 @@ async function bootstrap() {
     }),
     name: "portfolio",
     secret: SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     cookie: {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       maxAge: 1000 * 60 * 60 * 24,
     },
