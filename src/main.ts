@@ -26,7 +26,6 @@ async function bootstrap() {
       maxAge: 1000 * 60 * 60 * 24,
 
     },
-
   }))
 
   await app.listen(process.env.PORT || 4000);
