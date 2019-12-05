@@ -18,10 +18,11 @@ import { ProfileModule } from './profile/profile.module';
       autoSchemaFile: 'schema.gql',
       context: ({ req, res }) => ({req,res }),
     }),
+    TypeOrmModule.forRoot(typeOrmConfig),
     UserModule,
     ProjectModule,
     ProfileModule,
-    TypeOrmModule.forRoot(typeOrmConfig)
+   
   ],
   controllers: [AppController],
   providers: [AppService],
