@@ -29,7 +29,7 @@ async function bootstrap() {
     name: "portfolio",
     secret: SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       httpOnly: true,
       secure: false,
