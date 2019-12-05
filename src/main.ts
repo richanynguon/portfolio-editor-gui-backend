@@ -13,10 +13,6 @@ async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
-  // app.use(cors({
-  //   origin: "https://www.richanynguon.com",
-  //   credentials: true
-  // }))
   app.enableCors({
     origin: 'https://www.richanynguon.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -28,10 +24,10 @@ async function bootstrap() {
     }),
     name: "portfolio",
     secret: SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
+      httpOnly: false,
       secure: false,
       maxAge: 1000 * 60 * 60 * 24
     }
