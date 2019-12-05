@@ -12,12 +12,12 @@ import { ProfileModule } from './profile/profile.module';
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
-      context: ({ req, res }) => ({req,res }),
+      context: ({ req, res }) => ({ req, res }),
     }),
     UserModule,
     TypeOrmModule.forRoot(typeOrmConfig),
     ProjectModule,
-    ProfileModule   
+    ProfileModule
   ],
   controllers: [AppController],
   providers: [AppService],
