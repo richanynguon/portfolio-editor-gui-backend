@@ -12,7 +12,7 @@ import { ProfileModule } from './profile/profile.module';
   imports: [
     GraphQLModule.forRoot({
       cors: {
-        origin: 'https://richanynguon.com',
+        origin: true,
         credentials: true
       },
       autoSchemaFile: 'schema.gql',
