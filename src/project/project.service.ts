@@ -26,7 +26,6 @@ export class ProjectService {
     createProjectArgs: CreateProjectArgs,
     userId: string,
   ): Promise<Boolean> {
-   await  console.log(createProjectArgs, userId)
     const {
       project_focus,
       project_github,
@@ -34,19 +33,25 @@ export class ProjectService {
       project_stack,
       title
     } = createProjectArgs;
-    const newProject = await this.projectRepo.insert({
-      project_focus,
-      project_github,
-      project_photo,
-      project_stack,
-      title,
-      userId,
-    })
-    await this.projectVoteRepo.insert({
-      option: 'upvote',
-      votes: 0,
-      projectId: newProject.raw[0].id
-    })
+    try {
+      const newProject = await this.projectRepo.insert({
+        project_focus,
+        project_github,
+        project_photo,
+        project_stack,
+        title,
+        userId,
+      })
+      await this.projectVoteRepo.insert({
+        option: 'upvote',
+        votes: 0,
+        projectId: newProject.raw[0].id
+      })
+    } catch (err) {
+      console.log(err)
+      return false
+    }
+
     return true;
   }
 
@@ -78,7 +83,7 @@ export class ProjectService {
   ): Promise<ActionResponse[]> {
 
     const updatedProject =
-      await this.projectRepo.update({id:projectId}, editProject)
+      await this.projectRepo.update({ id: projectId }, editProject)
     if (!updatedProject) {
       return actionMessage('update_project', 'Sorry unable to update project')
     }
@@ -121,13 +126,13 @@ export class ProjectService {
   async deleteProject(
     ctx: MyContext,
     id: number
-  ): Promise<Boolean>{
-    try{
-      await this.projectRepo.delete({id})
+  ): Promise<Boolean> {
+    try {
+      await this.projectRepo.delete({ id })
       const ip =
-      ctx.req.header('x-forwarded-for') || ctx.req.connection.remoteAddress;
+        ctx.req.header('x-forwarded-for') || ctx.req.connection.remoteAddress;
       await redis.srem(`${VOTE_PREFIX}${id}`, ip);
-    }catch(err){
+    } catch (err) {
       return false;
     }
     return true;
