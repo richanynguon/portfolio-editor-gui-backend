@@ -13,10 +13,15 @@ async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
-  app.use(cors({
-    origin: "https://www.richanynguon.com",
-    credentials: true
-  }))
+  // app.use(cors({
+  //   origin: "https://www.richanynguon.com",
+  //   credentials: true
+  // }))
+  app.enableCors({
+    origin: 'https://www.richanynguon.com',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   app.use(session({
     store: new RedisStore({
       client: redis as any,
@@ -34,3 +39,4 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 4000);
 }
 bootstrap();
+

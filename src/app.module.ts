@@ -13,6 +13,10 @@ import { ProfileModule } from './profile/profile.module';
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
       context: ({ req, res }) => ({ req, res }),
+    cors: {
+      origin: 'https://www.richanynguon.com',
+      credentials: true,
+    },
     }),
     UserModule,
     TypeOrmModule.forRoot(typeOrmConfig),
@@ -23,3 +27,5 @@ import { ProfileModule } from './profile/profile.module';
   providers: [AppService],
 })
 export class AppModule { }
+
+
