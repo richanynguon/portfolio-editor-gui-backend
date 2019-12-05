@@ -12,10 +12,7 @@ dotenv.config()
 async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: 'https://richanynguon.com',
-    credentials: true
-  })
+
   app.use(helmet());
   app.use(session({
     store: new RedisStore({
