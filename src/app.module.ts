@@ -10,6 +10,7 @@ import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
       cors: {
         origin: 'https://richanynguon.com',
@@ -19,7 +20,6 @@ import { ProfileModule } from './profile/profile.module';
       context: ({ req, res }) => ({req,res }),
     }),
     UserModule,
-    TypeOrmModule.forRoot(typeOrmConfig),
     ProjectModule,
     ProfileModule
   ],
