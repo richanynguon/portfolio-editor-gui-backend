@@ -5,14 +5,14 @@ import * as session from 'express-session'
 import { SESSION_SECRET } from './constants';
 import * as Store from 'connect-redis';
 import { redis } from './redis';
-import * as helmet from 'helmet';
+// import * as helmet from 'helmet';
 
 
 dotenv.config()
 async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
-  app.use(helmet());
+  // app.use(helmet());
   app.enableCors({
     origin: 'https://richanynguon.com',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
