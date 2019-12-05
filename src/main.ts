@@ -5,7 +5,6 @@ import * as session from 'express-session'
 import { SESSION_SECRET } from './constants';
 import * as Store from 'connect-redis';
 import { redis } from './redis';
-import * as cors from 'cors';
 import * as helmet from 'helmet';
 
 
@@ -14,10 +13,6 @@ async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
-  // app.enableCors({
-  //   origin:'https://richanynguon.com',
-  //   credentials: true
-  // })
   app.use(session({
     store: new RedisStore({
       client: redis as any,
@@ -28,7 +23,7 @@ async function bootstrap() {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
+      secure: false,
       maxAge: 1000 * 60 * 60 * 24,
     },
 
