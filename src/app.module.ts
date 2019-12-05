@@ -11,18 +11,13 @@ import { ProfileModule } from './profile/profile.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      cors: {
-        origin:'https://richanynguon.com',
-        credentials: true
-      },
       autoSchemaFile: 'schema.gql',
       context: ({ req, res }) => ({req,res }),
     }),
-    TypeOrmModule.forRoot(typeOrmConfig),
     UserModule,
+    TypeOrmModule.forRoot(typeOrmConfig),
     ProjectModule,
-    ProfileModule,
-   
+    ProfileModule   
   ],
   controllers: [AppController],
   providers: [AppService],
