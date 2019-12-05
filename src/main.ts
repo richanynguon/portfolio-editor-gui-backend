@@ -13,11 +13,6 @@ async function bootstrap() {
   const RedisStore = Store(session);
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://richanynguon.com');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-  });
   app.use(session({
     store: new RedisStore({
       client: redis as any,
