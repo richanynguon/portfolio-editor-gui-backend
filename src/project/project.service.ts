@@ -25,7 +25,7 @@ export class ProjectService {
   async createProject(
     createProjectArgs: CreateProjectArgs,
     userId: string,
-  ): Promise<Boolean> {
+  ): Promise<ActionResponse[]> {
     const {
       project_focus,
       project_github,
@@ -47,12 +47,11 @@ export class ProjectService {
         votes: 0,
         projectId: newProject.raw[0].id
       })
+      return actionMessage('project', `Successfully create project`)
     } catch (err) {
-      console.log(err)
-      return false
+      return actionMessage('project', `Unable to create project`)
     }
 
-    return true;
   }
 
   async getProject(
@@ -85,16 +84,16 @@ export class ProjectService {
     const updatedProject =
       await this.projectRepo.update({ id: projectId }, editProject)
     if (!updatedProject) {
-      return actionMessage('update_project', 'Sorry unable to update project')
+      return actionMessage('project', 'Sorry unable to update project')
     }
-    return actionMessage('update_project', `Successfully updated project`)
+    return actionMessage('project', `Successfully updated project`)
 
   }
 
   async upVoteProject(
     ctx: MyContext,
     projectVoteId: number
-  ): Promise<Boolean> {
+  ): Promise<ActionResponse[]> {
 
     const projectVote =
       await this.projectVoteRepo.findOne({
@@ -109,7 +108,7 @@ export class ProjectService {
         `${VOTE_PREFIX}${projectVote.projectId}`, ip
       );
       if (hasIp) {
-        return false
+        return actionMessage('project', `Unable to upvote project`)
       }
     }
 
@@ -120,22 +119,22 @@ export class ProjectService {
 
     await redis.sadd(`${VOTE_PREFIX}${projectVote.projectId}`, ip);
 
-    return true;
+    return actionMessage('project', `Successfully upvote project`)
   }
 
   async deleteProject(
     ctx: MyContext,
     id: number
-  ): Promise<Boolean> {
+  ): Promise<ActionResponse[]> {
     try {
       await this.projectRepo.delete({ id })
       const ip =
         ctx.req.header('x-forwarded-for') || ctx.req.connection.remoteAddress;
       await redis.srem(`${VOTE_PREFIX}${id}`, ip);
     } catch (err) {
-      return false;
+      return actionMessage('project', `Unable to delete project`)
     }
-    return true;
+    return actionMessage('project', `Successfully delete project`)
   }
 
 }

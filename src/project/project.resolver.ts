@@ -22,12 +22,12 @@ import { AuthGuard } from './auth.guard';
 export class ProjectResolver {
   constructor(private readonly projectService: ProjectService) { }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => [ActionResponse])
   @UseGuards(AuthGuard)
   async createProject(
     @GetUserId() userId: string,
     @Args() createProjectArgs: CreateProjectArgs,
-  ): Promise<Boolean> {
+  ): Promise<ActionResponse[]> {
   
     return this.projectService.createProject(createProjectArgs, userId)
   }
@@ -55,20 +55,20 @@ export class ProjectResolver {
     return this.projectService.editProject(projectId, editProjectArgs)
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => [ActionResponse])
   async upVoteProject(
     @Context() ctx: MyContext,
     @Args('id') projectVoteId: number
-  ): Promise<Boolean> {
+  ): Promise<ActionResponse[]> {
     return this.projectService.upVoteProject(ctx, projectVoteId)
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => [ActionResponse])
   @UseGuards(AuthGuard)
   async deleteProject(
     @Context() ctx: MyContext,
     @Args('id') id: number
-  ): Promise<Boolean> {
+  ): Promise<ActionResponse[]> {
     return this.projectService.deleteProject(ctx, id)
   }
 
